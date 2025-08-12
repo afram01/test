@@ -15,79 +15,91 @@ document.addEventListener('DOMContentLoaded', function() {
         document.body.classList.add('dark-mode');
     }
 
-    // داده‌های محلی
-    const localData = {
-        "personal_info": {
-            "name": "Aida Ramezany",
-            "job_title": "Computer Engineering Student",
-            "about": "Passionate about software development and network security. Eager to learn new technologies and solve complex problems.",
-            "contact": {
-                "email": "ramezanyaida84@gmail.com",
-                "github": "github.com/afram01",
-                "linkedin": "linkedin.com/in/aida-ramezany"
-            },
-            "languages": [
-                {"language": "Persian", "level": "Native"},
-                {"language": "English", "level": "Intermediate"}
-            ]
-        },
-        "skills": [
-            {"name": "C++", "level": "Advanced", "percentage": 85},
-            {"name": "Python", "level": "low", "percentage": 10},
-            {"name": "Network Security", "level": "Learning", "percentage": 20}
-        ],
-        "education": [
-            {
-                "institution": "Abu Ali Sina University",
-                "field": "Computer Engineering (Software Orientation)",
-                "degree": "Bachelor",
-                "start_year": "2024",
-                "end_year": "2028 (Expected)",
-                "description": ""
-            }
-        ],
-        "experience": [
-            {
-                "company": "APA Specialized Center",
-                "position": "IT Intern",
-                "start_year": "2025",
-                "end_year": "Present",
-                "description": [
-                    "Assisting in network administration tasks",
-                    "Participating in software development projects",
-                    "Troubleshooting hardware and software issues"
+    // بارگذاری مستقیم فایل JSON بدون تلاش برای اتصال به سرور
+    fetch('resume.json')
+        .then(response => {
+            if (!response.ok) throw new Error('Failed to fetch resume.json');
+            return response.json();
+        })
+        .then(data => {
+            displayResume(data);
+            animateSkills();
+        })
+        .catch(error => {
+            console.error('Error loading resume data:', error);
+            // نمایش پیام خطا به کاربر
+            const localData = {
+                "personal_info": {
+                    "name": "Aida Ramezany",
+                    "job_title": "Computer Engineering Student",
+                    "about": "Passionate about software development and network security. Eager to learn new technologies and solve complex problems.",
+                    "contact": {
+                        "email": "ramezanyaida84@gmail.com",
+                        "github": "github.com/afram01",
+                        "linkedin": "linkedin.com/in/aida-ramezany"
+                    },
+                    "languages": [
+                        {"language": "Persian", "level": "Native"},
+                        {"language": "English", "level": "Intermediate"}
+                    ]
+                },
+                "skills": [
+                    {"name": "C++", "level": "Advanced", "percentage": 85},
+                    {"name": "Python", "level": "low", "percentage": 10},
+                    {"name": "Network Security", "level": "Learning", "percentage": 20}
+                ],
+                "education": [
+                    {
+                        "institution": "Abu Ali Sina University",
+                        "field": "Computer Engineering (Software Orientation)",
+                        "degree": "Bachelor",
+                        "start_year": "2024",
+                        "end_year": "2028 (Expected)",
+                        "description": ""
+                    }
+                ],
+                "experience": [
+                    {
+                        "company": "APA Specialized Center",
+                        "position": "IT Intern",
+                        "start_year": "2025",
+                        "end_year": "Present",
+                        "description": [
+                            "Assisting in network administration tasks",
+                            "Participating in software development projects",
+                            "Troubleshooting hardware and software issues"
+                        ]
+                    }
+                ],
+                "projects": [
+                    {
+                        "name": "Online Resume Project",
+                        "technologies": ["HTML", "CSS", "JavaScript", "C++"],
+                        "description": "A dynamic resume website that fetches data from JSON API",
+                        "github_link": "github.com/afram01/digital-resume"
+                    },
+                    {
+                        "name": "Horrified Game",
+                        "technologies": ["raylib", "C++"],
+                        "description": "This project is a horror game related to the advanced programming lesson project (in progress)",
+                        "github_link": "github.com/afram01/Final-project"
+                    },
+                    {
+                        "name": "Store system",
+                        "technologies": ["C++"],
+                        "description": "This group project is about a store's purchasing and sales system. This project is for an advanced programming course.",
+                        "github_link": "github.com/afram01/HW3"
+                    }
+                ],
+                "interests": [
+                    "Programming and Networking Competitions",
+                    "Network Security",
+                    "Programming"
                 ]
-            }
-        ],
-        "projects": [
-            {
-                "name": "Online Resume Project",
-                "technologies": ["HTML", "CSS", "JavaScript", "C++"],
-                "description": "A dynamic resume website that fetches data from JSON API",
-                "github_link": "github.com/afram01/digital-resume"
-            },
-            {
-                "name": "Horrified Game",
-                "technologies": ["raylib", "C++"],
-                "description": "This project is a horror game related to the advanced programming lesson project (in progress)",
-                "github_link": "github.com/afram01/Final-project"
-            },
-            {
-                "name": "Store system",
-                "technologies": ["C++"],
-                "description": "This group project is about a store's purchasing and sales system. This project is for an advanced programming course.",
-                "github_link": "github.com/afram01/HW3"
-            }
-        ],
-        "interests": [
-            "Programming and Networking Competitions",
-            "Network Security",
-            "Programming"
-        ]
-    };
-
-    displayResume(localData);
-    animateSkills();
+            };
+            document.getElementById('name').textContent = 'Error Loading Resume';
+            document.getElementById('job-title').textContent = 'Please try again later';
+        });
 });
 
 function displayResume(data) {
